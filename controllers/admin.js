@@ -1,4 +1,6 @@
 const Product = require('../models/product');
+const User=require('../models/user');
+const bodyParser = require('body-parser');
 
 exports.getAddProduct = (req, res, next) => {
   res.render('admin/edit-product', {
@@ -13,7 +15,7 @@ exports.postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  Product.create({
+  req.user.createProduct({
     title:title,
     price:price,
     imageUrl:imageUrl,
@@ -32,8 +34,10 @@ exports.getEditProduct = (req, res, next) => {
     return res.redirect('/');
   }
   const proId=req.params.productId;
-  Product.findByPk(proId)
-  .then(product=>{
+  //Product.findByPk(proId)
+  req.user.getProducts({where:{id:proId}})
+  .then(products=>{
+    const product=products[0];
     if(!product){
       res.redirect('/')
     }
@@ -71,7 +75,8 @@ const updatedTitle = req.body.title;
 }
 
 exports.getProducts = (req, res, next) => {
-  Product.findAll()
+ // Product.findAll()
+ req.user.getProducts()
   .then(products=>{
     res.render('admin/products', {
       prods: products,
@@ -107,3 +112,16 @@ Product.findByPk(proId)
   console.log(err);
 })
  }
+//  exports.postUsers= async (req,res,next)=>{
+//   const name=req.body.name;
+//   console.log("Name is ",name);
+//   const phoneNumber=req.body.phoneNumber;
+//   const email=req.body.email;
+//   const data= await User.create({
+//        name:name,
+//        phoneNumber:phoneNumber,
+//        email:email
+//   })
+//     res.status(201).json({newData:data});
+   
+//  }
