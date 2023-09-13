@@ -1,0 +1,53 @@
+const User=require('../models/user');
+const { use } = require('../routes/admin');
+
+exports.postAddUser= async (req,res,next)=>{
+    try{
+    const name=req.body.name;
+      console.log("Name is ",name);
+      const phoneNumber=req.body.phoneNumber;
+      const email=req.body.email;
+      const data= await User.create({
+           name:name,
+           phoneNumber:phoneNumber,
+           email:email
+      })
+        res.status(201).json({newUserDetails:data});
+    }
+    catch(err){
+        res.status(500).json({
+            error:err
+        })
+    }
+}
+
+exports.getUsers=async(req,res,next)=>{
+    try{
+      const data=await User.findAll();
+      res.status(200).json({dt:data});
+    }
+    catch(err){
+        res.status(500).json({
+            error:err
+        })  
+    }
+}
+
+exports.deleteUser=async(req,res,next)=>{
+    const userId = req.params.id;
+  console.log(userId);
+  
+  try {
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    
+    await user.destroy();
+    console.log('User deleted');
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: err.message });
+  }
+}
