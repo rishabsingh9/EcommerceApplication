@@ -1,10 +1,20 @@
 .post-container {
-    border: 2px solid black;
+    border: 8px solid black;
     padding: 10px;
     margin-bottom: 10px;
+    background-color: rgba(0, 0, 0, 0.544);
+    max-width: 500px; /* Set your specific width here */
+    margin-bottom: 20px; /* Add margin to separate posts vertically */
+}
+.user-description {
+    text-align: center;
 }
 
-/* Style the post box (post description and comments) */
+#form-container {
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* 100% of the viewport height */
+}
 .post-box {
     margin-bottom: 10px;
 }
@@ -35,3 +45,17 @@ button:hover {
     margin: 5px 0;
     border: 1px solid #ccc;
 }
+
+/* Style the image inside post-box */
+.post-box img {
+    max-width: 100%; /* Ensure the image fits within the container */
+    max-height: 100%; /* Ensure the image fits within the container */
+    display: block; /* Remove any extra spacing below the image */
+    margin: 0 auto; /* Center the image horizontally */
+}
+#postFeed {
+    display: flex;
+    flex-direction: column; /* Stack posts vertically */
+    align-items: center; /* Center posts horizontally */
+}
+

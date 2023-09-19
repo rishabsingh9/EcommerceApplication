@@ -24,7 +24,9 @@ const shopRoutes = require('./routes/shop');
 const userRoute=require('./routes/user');
 const expenseRoutes=require('./routes/expense');
 const Product = require('./models/product');
+const Comment=require('./models/comments');
 const Cart = require('./models/cart');
+const Post=require('./models/post')
 const CartItem= require('./models/cart-item');
 const PostRoutes=require('./routes/post');
 
@@ -55,6 +57,9 @@ User.hasOne(Cart);
 Cart.belongsTo(User);
 Cart.belongsToMany(Product,{through:CartItem});
 Product.belongsToMany(Cart,{through:CartItem});
+
+Comment.belongsTo(Post);
+Post.hasMany(Comment);
 
 sequelize
 //.sync({force:true})
